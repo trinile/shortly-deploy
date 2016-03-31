@@ -12,7 +12,9 @@ public/dist
 Icon
 
 
-
+# sshkeys
+sshKeyDeploy.txt
+sshKeyDeploy.txt.pub
 
 # Floobits
 .floo

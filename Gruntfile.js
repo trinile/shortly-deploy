@@ -7,8 +7,8 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['app/**/*.js', 'lib/**/*.js', 'public/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['public/lib/**/*.js','public/client/**/*.js','lib/**/*.js','app/**/*.js'],
+        dest: 'public/dist/<%= pkg.name %>.js'
       }
     },
 
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          'public/dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
@@ -42,10 +42,18 @@ module.exports = function(grunt) {
     eslint: {
       target: [
         // Add list of files to lint here
+        'public/lib/**/*.js','public/client/**/*.js','lib/**/*.js','app/**/*.js',
       ]
     },
-
     cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          src: 'public/*.css',
+          dest: 'public/dist',
+          ext: '.min.css'
+        }]
+      }
     },
 
     watch: {
@@ -105,7 +113,7 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
-  grunt.registerTask('default', ['uglify', 'server-dev']);
+  grunt.registerTask('default', ['eslint', 'mochaTest','concat', 'uglify', 'cssmin', 'server-dev']);
   grunt.registerTask('test', [
     'mochaTest'
   ]);
