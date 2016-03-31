@@ -111,7 +111,7 @@ module.exports = function(grunt) {
   });
 
   ////////////////////////////////////////////////////
-  // Main grunt tasks
+  // Main grunt tasks TO DO:
   ////////////////////////////////////////////////////
   grunt.registerTask('default', ['eslint', 'mochaTest','concat', 'uglify', 'cssmin', 'server-dev']);
   grunt.registerTask('test', [
