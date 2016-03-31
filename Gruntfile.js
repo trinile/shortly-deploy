@@ -30,8 +30,8 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         // the banner is ins erted at the top of the output
-        sourceMap: true
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+        sourceMap: true,
         mangle: false
       },
       dist: {
