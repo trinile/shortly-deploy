@@ -78,9 +78,13 @@ module.exports = function(grunt) {
     },
 
     shell: {
-      prodServer: {
+      multiple: {
+        command: [
+          'git status',
+          'git push live master'
+        ].join('&&')
       }
-    },
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -105,35 +109,30 @@ module.exports = function(grunt) {
     grunt.task.run([ 'watch' ]);
   });
 
-  // grunt.registerTask('default', ['concat']);
-
-  grunt.registerTask('upload', function(n) {
-    if (grunt.option('prod')) {
-      // add your production server task here
-    }
-    grunt.task.run([ 'server-dev' ]);
-  });
-
   ////////////////////////////////////////////////////
   // Main grunt tasks TO DO:
   ////////////////////////////////////////////////////
-  grunt.registerTask('default', ['eslint', 'mochaTest','concat', 'uglify', 'cssmin', 'server-dev']);
-  grunt.registerTask('test', [
+  grunt.registerTask('default', 'deploy');
+  
+  grunt.registerTask('test', [ 'eslint',
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('build', ['concat', 'uglify', 'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['shell']);
+
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
   grunt.registerTask('deploy', [
+    'test', 'build','upload'
     // add your deploy tasks here
   ]);
 
