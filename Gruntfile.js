@@ -80,7 +80,8 @@ module.exports = function(grunt) {
     shell: {
       multiple: {
         command: [
-          'git status',
+          'git add .',
+          'git commit -m "Grunt auto-update to live remote"',
           'git push live master'
         ].join('&&')
       }
@@ -112,13 +113,14 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks TO DO:
   ////////////////////////////////////////////////////
-  grunt.registerTask('default', 'deploy');
+  grunt.registerTask('default', ['deploy']);
   
   grunt.registerTask('test', [ 'eslint',
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', ['concat', 'uglify', 'cssmin'
+  grunt.registerTask('build', [
+    'concat', 'uglify', 'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
