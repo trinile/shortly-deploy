@@ -1,39 +1,32 @@
-var path = require('path');
-var knex = require('knex')({
-  client: 'sqlite3',
-  connection: {
-    filename: path.join(__dirname, '../db/shortly.sqlite')
-  }
-});
-var db = require('bookshelf')(knex);
+// var path = require('path');
+// var knex = require('knex')({
+//   client: 'sqlite3',
+//   connection: {
+//     filename: path.join(__dirname, '../db/shortly.sqlite')
+//   }
+// });
 
-db.knex.schema.hasTable('urls').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('urls', function (link) {
-      link.increments('id').primary();
-      link.string('url', 255);
-      link.string('baseUrl', 255);
-      link.string('code', 100);
-      link.string('title', 255);
-      link.integer('visits');
-      link.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
 
-db.knex.schema.hasTable('users').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('users', function (user) {
-      user.increments('id').primary();
-      user.string('username', 100).unique();
-      user.string('password', 100);
-      user.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
+var mongoose = require('mongoose');
+var mongodb = require('mongodb');
+var Schema = mongoose.Schema;
+mongoose.connect('mongodb://localhost/mongo');
+var db = mongoose.createConnection('mongodb://localhost/mongo');
+// var users = new Schema({
+//   username: { type: String, required: true, unique: true },
+//   password: { type: String, required: true },
+//   created_at: Date,
+//   updated_at: Date
+// });
+
+// var urls = new Schema({
+//   url: { type: String, required: true },
+//   baseURL: { type: String, required: true },
+//   code: { type: String },
+//   title: { type: String },
+//   visits: { type: Number },
+//   created_at: Date,
+//   updated_at: Date
+// });
 
 module.exports = db;

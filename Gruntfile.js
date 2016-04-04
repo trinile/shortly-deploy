@@ -83,7 +83,12 @@ module.exports = function(grunt) {
           'git add .',
           'git commit -m "Grunt auto-update to live remote"',
           'git push live master'
-        ].join('&&')
+        ].join('&&'),
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
     }
   });
